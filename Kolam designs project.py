@@ -179,7 +179,7 @@ for turn_angle in range(0, 360-no_of_symmetry, turn_angle_step):
 draw_petal(1, 0, 100*0.7, 1.5*250*0.7, 0.4, 0.8, turn_angle_step/2, colour="red", draw_top=False)
 draw_petal(1, 0, 100*0.7, 250*0.7, 0.4, 0.8, turn_angle_step/2, colour="blue", draw_top=False)
 
-draw_circle(0, -50, radius=50, colour="orange")
+draw_circle(0, -25, radius=50, colour="orange")
 
 
 
