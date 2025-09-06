@@ -156,7 +156,7 @@ print("start")               #for debug
 
 
 no_of_symmetry = 4
-animations = True
+animations = False
 if not animations:
     turtle.tracer(0, 0)
 
@@ -171,8 +171,12 @@ draw_circle(radius=1)
 for angle in range(0, 360, 360//no_of_symmetry):
 
     for repeat in range(0,50, 10):
-        draw_bezier_curve(size-2*repeat, size-2*repeat, size-2*repeat, -repeat, repeat, size, size, size, colour="black", offset_x=repeat, offset_y=-size-repeat, angle=angle, t_max=1.01)
-        draw_bezier_curve(size-2*repeat, size-2*repeat, size-2*repeat, -repeat, repeat, size, size, size, colour="black", offset_x=-size+repeat, offset_y=size-size-repeat, angle=angle, t_max=1.01)
+        A = (size-2*repeat, repeat)
+        B = (size-2*repeat, size)
+        C = (size-2*repeat, size)
+        D = (-repeat, size)
+        draw_bezier_curve(A[0], B[0], C[0], D[0], A[1], B[1], C[1], D[1], colour="black", offset_x=repeat, offset_y=-size-repeat, angle=angle, t_max=1.01)
+        draw_bezier_curve(A[0], B[0], C[0], D[0], A[1], B[1], C[1], D[1], colour="black", offset_x=-size+repeat, offset_y=size-size-repeat, angle=angle, t_max=1.01)
 
 
 
