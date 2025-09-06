@@ -49,11 +49,12 @@ screen.title("Kolam Designs")
 pen = turtle.Turtle()
 
 #Useful fuctions:
-def draw_bezier_curve(x_a, x_b, x_c, x_d, y_a, y_b, y_c, y_d, offset_x=0, offset_y=0, angle = 0, colour = "blue", step = 0.01, t_min = 0, t_max = 1):
+def draw_bezier_curve(x_a, x_b, x_c, x_d, y_a, y_b, y_c, y_d, offset_x=0, offset_y=0, angle = 0, colour = "blue", step = 0.01, t_min = 0.001, t_max = 1, colour_fill= False):
     pen.speed(0)
-    pen.fillcolor(colour)
     pen_starting_position = (0, 0)
-    pen.begin_fill()
+    if colour_fill:
+        pen.fillcolor(colour)
+        pen.begin_fill()
     pen.color(colour)
     pen.penup()
 
@@ -61,6 +62,7 @@ def draw_bezier_curve(x_a, x_b, x_c, x_d, y_a, y_b, y_c, y_d, offset_x=0, offset
     while t <= t_max:
         x = offset_x + t**3 * (x_a - 3*x_b + 3*x_c - x_d) + 3*t**2 * (x_b - 2*x_c + x_d) + 3*t * (x_c - x_d) + x_d
         y = offset_y + t**3 * (y_a - 3*y_b + 3*y_c - y_d) + 3*t**2 * (y_b - 2*y_c + y_d) + 3*t * (y_c - y_d) + y_d
+
 
         if t == t_min:
             pen_starting_position = turn_object(x, y, angle)
@@ -70,9 +72,10 @@ def draw_bezier_curve(x_a, x_b, x_c, x_d, y_a, y_b, y_c, y_d, offset_x=0, offset
         pen.pendown()
         t += step
 
-    pen.goto(turn_object(offset_x, offset_y, angle))
-    pen.goto(pen_starting_position)
-    pen.end_fill()
+    if colour_fill:
+        pen.goto(turn_object(offset_x, offset_y, angle))
+        pen.goto(pen_starting_position)
+        pen.end_fill()
 def turn_object(x, y, degrees = 0):
      radius = math.sqrt(x**2 + y**2)
      if x == 0:
@@ -147,19 +150,29 @@ def draw_petal(offset_x=0, offset_y=0, thickness=100, tallness=200, roundness=0.
 
 
 
-
 #MAIN PROGRAM
 print("start")               #for debug
 
 
 
-no_of_symmetry = 6
+no_of_symmetry = 4
 
 
 
 
 
 # Create stuff here
+
+size = 200
+draw_circle(radius=1)
+for angle in range(0, 360, 360//no_of_symmetry):
+
+    for repeat in range(0,50, 10):
+        draw_bezier_curve(size-2*repeat, size-2*repeat, size-2*repeat, -repeat, repeat, size, size, size, colour="black", offset_x=repeat, offset_y=-size-repeat, angle=angle, t_max=1.01)
+        draw_bezier_curve(size-2*repeat, size-2*repeat, size-2*repeat, -repeat, repeat, size, size, size, colour="black", offset_x=-size+repeat, offset_y=size-size-repeat, angle=angle, t_max=1.01)
+
+
+""" 
 
 
 turn_angle_step = 360//no_of_symmetry
@@ -180,7 +193,7 @@ draw_petal(1, 0, 100*0.7, 1.5*250*0.7, 0.4, 0.8, turn_angle_step/2, colour="red"
 draw_petal(1, 0, 100*0.7, 250*0.7, 0.4, 0.8, turn_angle_step/2, colour="blue", draw_top=False)
 
 draw_circle(0, -25, radius=50, colour="orange")
-
+ """
 
 
 
